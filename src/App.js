@@ -5,24 +5,20 @@ import { useEffect } from "react";
 function App() {
   function openApp() {
     const appURL = "deeplinkinghj://product/1"; // Custom scheme URL for your app
-    const fallbackURL = window.location.href; // Current web URL
+    const fallbackURL =
+      "https://play.google.com/store/apps/details?id=com.deeplinkinghj"; // Play Store link
 
-    // Create an iframe to attempt to open the app
-    const iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = appURL;
-    document.body.appendChild(iframe);
+    // Attempt to open the app
+    window.location = appURL;
 
-    // Remove iframe after 2 seconds and redirect to the fallback URL
+    // Fallback to Play Store after 2 seconds if the app is not installed
     setTimeout(() => {
-      document.body.removeChild(iframe);
-      window.location.href = fallbackURL;
+      window.location = fallbackURL;
     }, 2000);
   }
 
-  useEffect(() => {
-    openApp();
-  }, []);
+  // Call the openApp function when the page loads
+  window.onload = openApp;
 
   return (
     <div className="App">
